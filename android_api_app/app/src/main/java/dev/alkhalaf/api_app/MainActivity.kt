@@ -1,5 +1,6 @@
 package dev.alkhalaf.api_app
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         makeRequest(findViewById<Button>(R.id.makeRequestButton))
     }
 
+    private var lastQuote: Quote? = null
+
     fun makeRequest(view: View) {
         val responseStatusTextView: TextView = findViewById<TextView>(R.id.responseStatusTextView)
         val authorTextView: TextView = findViewById<TextView>(R.id.authorTextView);
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                     quote = jsonResponse["content"].toString(),
                     author = jsonResponse["author"].toString(),
                 )
+                lastQuote = quote
                 responseStatusTextView.text = "${quote.quote}"
                 authorTextView.text = "- ${quote.author}"
             },
@@ -49,5 +53,23 @@ class MainActivity : AppCompatActivity() {
         )
 
         queue.add(stringRequest)
+    }
+
+    fun shareQuote(view: View) {
+        if (lastQuote == null) {
+            // TODO: show a toast or snack bar
+            return;
+        }
+
+        val shareIntent: Intent = Intent();
+        shareIntent.action = Intent.ACTION_SEND;
+
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+        val shareMessage: String = """${lastQuote!!.quote}
+by ${lastQuote!!.author}""".trimMargin()
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+
+        startActivity(Intent.createChooser(shareIntent, "Share this awesome quote with your friends!"))
     }
 }

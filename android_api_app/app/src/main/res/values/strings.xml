@@ -2,4 +2,5 @@
     <string name="app_name">api_app</string>
     <string name="make_requests_button">Get Another Quote</string>
     <string name="initial_response_status">Get Another Quote 😎</string>
+    <string name="share_button_content_description">Share Button</string>
 </resources>
