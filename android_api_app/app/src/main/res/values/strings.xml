@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">api_app</string>
+    <string name="make_requests_button">Make Request</string>
+    <string name="initial_response_status">Make The Request 😎</string>
 </resources>
