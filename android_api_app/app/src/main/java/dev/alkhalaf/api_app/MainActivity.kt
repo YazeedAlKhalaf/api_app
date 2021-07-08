@@ -3,10 +3,10 @@ package dev.alkhalaf.api_app
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import dev.alkhalaf.api_app.models.Quote
@@ -16,6 +16,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // runs once the app launches the activity.
+        makeRequest(findViewById<Button>(R.id.makeRequestButton))
     }
 
     fun makeRequest(view: View) {
