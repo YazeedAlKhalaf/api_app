@@ -1,15 +1,18 @@
 package dev.alkhalaf.api_app
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.snackbar.Snackbar
 import dev.alkhalaf.api_app.models.Quote
 import org.json.JSONObject
 
@@ -57,7 +60,16 @@ class MainActivity : AppCompatActivity() {
 
     fun shareQuote(view: View) {
         if (lastQuote == null) {
-            // TODO: show a toast or snack bar
+            val snackbar: Snackbar =
+                Snackbar.make(
+                    view,
+                    "There seems to be no quote! 🤷‍♂️",
+                    Snackbar.LENGTH_SHORT
+                )
+            snackbar.setAction("Action", null)
+            snackbar.setActionTextColor(Color.WHITE)
+            snackbar.setBackgroundTint("#6200EE".toColorInt())
+            snackbar.show()
             return;
         }
 
@@ -67,9 +79,14 @@ class MainActivity : AppCompatActivity() {
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
         val shareMessage: String = """${lastQuote!!.quote}
-by ${lastQuote!!.author}""".trimMargin()
+- by ${lastQuote!!.author}"""
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
 
-        startActivity(Intent.createChooser(shareIntent, "Share this awesome quote with your friends!"))
+        startActivity(
+            Intent.createChooser(
+                shareIntent,
+                "Share this awesome quote with your friends!"
+            )
+        )
     }
 }
