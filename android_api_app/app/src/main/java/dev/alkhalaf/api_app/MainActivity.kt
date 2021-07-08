@@ -18,14 +18,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-
-    var isLoading: Boolean = false;
-
     fun makeRequest(view: View) {
         val responseStatusTextView: TextView = findViewById<TextView>(R.id.responseStatusTextView)
         val authorTextView: TextView = findViewById<TextView>(R.id.authorTextView);
 
         responseStatusTextView.text = "Loading..."
+        authorTextView.text = ""
 
         val queue: RequestQueue = Volley.newRequestQueue(this)
         val url: String = "https://api.quotable.io/random"
@@ -48,6 +46,5 @@ class MainActivity : AppCompatActivity() {
         )
 
         queue.add(stringRequest)
-
     }
 }
